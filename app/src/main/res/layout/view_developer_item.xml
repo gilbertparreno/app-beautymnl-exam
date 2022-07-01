@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/developerPhoto"
+        android:layout_width="@dimen/avatar_icon_size"
+        android:layout_height="@dimen/avatar_icon_size"
+        android:layout_marginStart="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:layout_marginBottom="@dimen/spacing_m"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:background="@color/black" />
+
+    <TextView
+        android:id="@+id/developerName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:gravity="start"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/developerPhoto"
+        app:layout_constraintTop_toTopOf="@id/developerPhoto"
+        app:layout_constraintVertical_bias="1"
+        tools:text="@tools:sample/cities" />
+
+    <TextView
+        android:id="@+id/developerEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_xxs"
+        android:gravity="start"
+        android:textColor="@color/mid_gray"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/developerPhoto"
+        app:layout_constraintTop_toBottomOf="@id/developerName"
+        tools:text="@tools:sample/cities" />
+
+    <TextView
+        android:id="@+id/developerPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_xxs"
+        android:gravity="start"
+        android:textColor="@color/mid_gray"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/developerPhoto"
+        app:layout_constraintTop_toBottomOf="@id/developerEmail"
+        tools:text="@tools:sample/cities"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/developerCompany"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_xxs"
+        android:layout_marginBottom="@dimen/spacing_m"
+        android:gravity="start"
+        android:textColor="@color/mid_gray"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/developerPhoto"
+        app:layout_constraintTop_toBottomOf="@id/developerPhone"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="@tools:sample/cities"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:layout_marginStart="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:background="@color/mid_gray_alpha_75"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/developerPhoto"
+        app:layout_constraintTop_toBottomOf="@id/developerCompany" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
