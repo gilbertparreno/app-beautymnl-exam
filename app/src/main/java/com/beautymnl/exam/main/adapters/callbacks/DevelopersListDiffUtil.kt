@@ -1,7 +1,8 @@
 package com.beautymnl.exam.main.adapters.callbacks
 
 import androidx.recyclerview.widget.DiffUtil
-import com.beautymnl.exam.main.entities.DeveloperListItem
+import com.beautymnl.exam.core.entities.DeveloperListItem
+import com.beautymnl.exam.core.extensions.allTrue
 
 class DevelopersListDiffUtil(
     private val oldItems: List<DeveloperListItem>,
@@ -17,10 +18,26 @@ class DevelopersListDiffUtil(
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldItems[oldItemPosition].email == newItems[newItemPosition].email
+        val newItem = newItems[newItemPosition]
+        val oldItem = oldItems[oldItemPosition]
+        return allTrue(
+            oldItem.id == newItem.id,
+            oldItem.insetContainerType == newItem.insetContainerType
+        )
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldItems[oldItemPosition] == newItems[newItemPosition]
+        val newItem = newItems[newItemPosition]
+        val oldItem = oldItems[oldItemPosition]
+        return allTrue(
+            oldItem.id == newItem.id,
+            oldItem.showOptions == newItem.showOptions,
+            oldItem.name == newItem.name,
+            oldItem.insetContainerType == newItem.insetContainerType,
+            oldItem.phoneNumber == newItem.phoneNumber,
+            oldItem.company == newItem.company,
+            oldItem.email == newItem.email,
+            oldItem.photoUrl == newItem.photoUrl
+        )
     }
 }

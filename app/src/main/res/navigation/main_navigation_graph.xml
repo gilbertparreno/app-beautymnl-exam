@@ -12,15 +12,27 @@
         tools:layout="@layout/fragment_main">
 
         <action
-            android:id="@+id/mainToContributorDetails"
-            app:destination="@id/fragmentContributorDetails" />
+            android:id="@+id/mainToDeveloperDetails"
+            app:destination="@id/fragmentDeveloperDetails" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/fragmentContributorDetails"
-        android:name="com.beautymnl.exam.details.ContributorDetailsFragment"
-        android:label="contributorDetails"
-        tools:layout="@layout/fragment_contributors_details" />
+        android:id="@+id/fragmentDeveloperDetails"
+        android:name="com.beautymnl.exam.details.fragments.DeveloperDetailsFragment"
+        android:label="developerDetails"
+        tools:layout="@layout/fragment_developer_details">
+
+        <argument
+            android:name="developerItem"
+            app:argType="com.beautymnl.exam.core.entities.DeveloperListItem"
+            app:nullable="true" />
+
+        <argument
+            android:name="detailsViewType"
+            android:defaultValue="EDIT"
+            app:argType="com.beautymnl.exam.details.enums.DetailsViewType" />
+
+    </fragment>
 
 </navigation>

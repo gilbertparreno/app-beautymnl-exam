@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">BeautyMNL</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
+    <string name="dialog_remove_developer_title">Remove developer</string>
+    <string name="dialog_remove_developer_message">Do you want to remove %s from the list?</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="full_name">Full name</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone number</string>
+    <string name="company">Company</string>
+
+    <string name="continue_label">Continue</string>
+
+    <string name="add_developer">Add developer</string>
+    <string name="edit_developer">Edit developer</string>
+
+    <string name="delete_success_message">Successfully deleted!</string>
+    <string name="add_success_message">Successfully added!</string>
+    <string name="update_success_message">Successfully updated!</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="generic_error_message">Oops! Something went wrong.</string>
 </resources>

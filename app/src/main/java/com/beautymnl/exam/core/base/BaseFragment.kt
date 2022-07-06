@@ -19,9 +19,14 @@ abstract class BaseFragment<V : BaseFragmentView> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return onCreateView(inflater.context, savedInstanceState).also {
-            contentView = it
+        if (this::contentView.isInitialized) {
+            contentView
+        } else {
+            onCreateView(inflater.context, savedInstanceState).also {
+                contentView = it
+            }
         }
+        return contentView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

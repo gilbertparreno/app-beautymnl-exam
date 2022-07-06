@@ -7,10 +7,15 @@ import android.os.SystemClock
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import androidx.annotation.ColorInt
+import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.beautymnl.exam.R
 import com.beautymnl.exam.core.enums.InsetContainerType
+
+fun View.dp(value: Int): Int = context.dp(value)
 
 inline fun View.setDebounceClickListener(
     debounceTime: Long = 600L,
@@ -54,4 +59,60 @@ fun View.getCompatDrawable(@DrawableRes resId: Int): Drawable? {
 
 fun View.goneIf(action: () -> Boolean) {
     visibility = if (action.invoke()) GONE else VISIBLE
+}
+
+fun View.getString(@StringRes resId: Int) : String {
+    return context.getString(resId)
+}
+
+fun View.getDimension(@DimenRes resId: Int) =
+    context.resources.getDimension(resId).toInt()
+
+fun View.marginTopDp(@DimenRes marginRes: Int) {
+    layoutParams<ViewGroup.MarginLayoutParams> {
+        topMargin = getDimension(marginRes)
+    }
+}
+
+fun View.marginBottomDp(@DimenRes marginRes: Int) {
+    layoutParams<ViewGroup.MarginLayoutParams> {
+        bottomMargin = getDimension(marginRes)
+    }
+}
+
+fun View.marginBottom(bottom: Int? = null) {
+    layoutParams<ViewGroup.MarginLayoutParams> {
+        bottom?.run { bottomMargin = dp(this) }
+    }
+}
+
+fun View.marginTop(top: Int? = null) {
+    layoutParams<ViewGroup.MarginLayoutParams> {
+        top?.run { topMargin = dp(this) }
+    }
+}
+
+inline fun <reified T : ViewGroup.LayoutParams> View.layoutParams(block: T.() -> Unit) {
+    if (layoutParams is T) block(layoutParams as T)
+}
+
+inline fun View.fadeOutView(
+    duration: Long = 300,
+    setGone: Boolean = true,
+    crossinline endAction: () -> Unit = {}
+) {
+    this.animate()
+        .alpha(0f)
+        .setDuration(duration)
+        .withEndAction {
+            if (setGone) {
+                this.visibility = GONE
+            }
+            endAction.invoke()
+        }.start()
+}
+
+fun View.fadeInView(duration: Long = 300, alpha: Float = 1f) {
+    this.visibility = VISIBLE
+    this.animate().alpha(alpha).setDuration(duration).start()
 }

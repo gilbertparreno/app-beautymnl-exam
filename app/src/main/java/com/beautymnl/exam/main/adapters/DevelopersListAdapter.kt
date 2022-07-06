@@ -7,16 +7,17 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.beautymnl.exam.R
 import com.beautymnl.exam.core.architecture.BaseListAdapter
-import com.beautymnl.exam.core.enums.InsetContainerType.ROUNDED
-import com.beautymnl.exam.core.enums.InsetContainerType.ROUNDED_BOTTOM
+import com.beautymnl.exam.core.entities.DeveloperListItem
+import com.beautymnl.exam.core.enums.InsetContainerType.*
 import com.beautymnl.exam.core.extensions.*
 import com.beautymnl.exam.main.adapters.callbacks.DevelopersListDiffUtil
-import com.beautymnl.exam.main.entities.DeveloperListItem
 import kotlinx.android.synthetic.main.view_developer_item.view.*
 
 class DevelopersListAdapter(
-    override var items: List<DeveloperListItem> = listOf(),
-    private val onItemPressed: ((developer: DeveloperListItem) -> Unit)? = null
+    override var items: MutableList<DeveloperListItem> = mutableListOf(),
+    private val onEditItemPressed: ((developer: DeveloperListItem) -> Unit)? = null,
+    private val onDeleteItemPressed: ((developer: DeveloperListItem) -> Unit)? = null,
+    private val onOptionVisibilityChanged: ((isVisible: Boolean) -> Unit)? = null
 ) : BaseListAdapter<DeveloperListItem>(items) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,29 +41,91 @@ class DevelopersListAdapter(
                 )
             }
 
-            listOf(developerCompany, developerPhone).forEach {
-                it.goneIf { !item.isExpanded }
-            }
+            delete.goneIf { !item.showOptions }
 
             setInset(item.insetContainerType)
 
             setDebounceClickListener {
-                setListItems(
-                    items.mapIndexed { index, oldItem ->
-                        if (index == position) {
-                            oldItem.copy(isExpanded = !oldItem.isExpanded)
-                        } else {
-                            oldItem.copy(isExpanded = false)
-                        }
+                if (items.any { it.showOptions }) {
+                    hideOptions()
+                    onOptionVisibilityChanged?.invoke(items.any { it.showOptions })
+                } else {
+                    onEditItemPressed?.invoke(item)
+                }
+            }
+            setOnLongClickListener {
+                setListItems(items.map { it.copy(showOptions = !it.showOptions) })
+                onOptionVisibilityChanged?.invoke(items.any { it.showOptions })
+                return@setOnLongClickListener true
+            }
+            delete.setDebounceClickListener {
+                onDeleteItemPressed?.invoke(item)
+            }
+
+            when (item.insetContainerType) {
+                ROUNDED_BOTTOM -> {
+                    if (items.any { it.showOptions }) {
+                        marginBottomDp(R.dimen.spacing_m)
+                    } else {
+                        marginBottom(88)
                     }
-                )
+                    marginTop(0)
+                }
+                ROUNDED_TOP -> {
+                    marginTopDp(R.dimen.spacing_m)
+                    marginBottom(0)
+                }
+                else -> {
+                    marginBottom(0)
+                    marginTop(0)
+                }
             }
         }
     }
 
     fun setListItems(items: List<DeveloperListItem>) {
         val diffResult = DiffUtil.calculateDiff(DevelopersListDiffUtil(this.items, items))
-        this.items = items
+        this.items.clear()
+        this.items.addAll(items)
         diffResult.dispatchUpdatesTo(this)
+    }
+
+    fun addDeveloperToList(item: DeveloperListItem) {
+        val index = this.items.indexOfFirst { it.id == item.id }
+        if (index != -1) {
+            val newList = this.items.toMutableList().apply {
+                set(
+                    index,
+                    get(index).copy(
+                        name = item.name,
+                        email = item.email,
+                        phoneNumber = item.phoneNumber,
+                        company = item.company
+                    )
+                )
+                applyInset()
+            }
+            setListItems(newList)
+        } else {
+            val newList = this.items.toMutableList().apply {
+                add(0, item.copy(insetContainerType = ROUNDED_TOP))
+                getOrNull(1)?.let {
+                    set(1, it.copy(insetContainerType = DEFAULT))
+                }
+            }
+            setListItems(newList)
+        }
+    }
+
+    fun removeItem(id: Int) {
+        setListItems(
+            items.filterNot { it.id == id }
+                .map { it.copy() }
+                .applyInset()
+        )
+    }
+
+    fun hideOptions() {
+        setListItems(items.map { it.copy(showOptions = false) })
     }
 }

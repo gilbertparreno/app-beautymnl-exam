@@ -23,7 +23,7 @@ object Dependencies {
     private const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     private const val material = "com.google.android.material:material:${Versions.material}"
     private const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
-    private const val fragment = "androidx.navigation:navigation-fragment:${Versions.navigation}"
+    private const val fragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     private const val navigation = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
 
     private const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutinesCore}"
@@ -41,6 +41,10 @@ object Dependencies {
     private const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
 
     private const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
+
+    private const val materialDialog = "com.afollestad.material-dialogs:lifecycle:${Versions.materialDialog}"
+
+    private const val sweetDialog = "com.github.f0ris.sweetalert:library:${Versions.sweetDialog}"
 
     // unit testing
     private const val testJUnit = "junit:junit:${Versions.testJUnit}"
@@ -62,7 +66,9 @@ object Dependencies {
         okhttp3Interceptor,
         coil,
         hiltAndroid,
-        timber
+        timber,
+        materialDialog,
+        sweetDialog
     )
 
     val kaptDependencies = listOf(hiltAndroidCompiler)

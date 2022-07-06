@@ -16,6 +16,10 @@ object Versions {
 
     const val timber = "5.0.1"
 
+    const val materialDialog = "3.3.0"
+
+    const val sweetDialog = "1.6.2"
+
     // unit testing
     const val testJUnit = "4.13.2"
 

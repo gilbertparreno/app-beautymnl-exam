@@ -6,6 +6,8 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 
+fun Context.dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
+
 fun Context.getCompatDrawable(@DrawableRes resId: Int): Drawable? {
     return ContextCompat.getDrawable(this, resId)
 }
